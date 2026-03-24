@@ -1,15 +1,27 @@
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Heart, Menu, X } from "lucide-react";
+import { Crown, Heart, Menu, MessageCircle, Shield, X } from "lucide-react";
 import { useState } from "react";
+import { useActor } from "../hooks/useActor";
 import { useInternetIdentity } from "../hooks/useInternetIdentity";
 
 export default function Navbar() {
   const { clear, identity, isLoggingIn } = useInternetIdentity();
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+  const { actor, isFetching } = useActor();
 
   const isLoggedIn = !!identity;
+
+  const { data: isAdmin } = useQuery({
+    queryKey: ["isAdmin"],
+    queryFn: async () => {
+      if (!actor) return false;
+      return actor.isCallerAdmin();
+    },
+    enabled: !!actor && !isFetching && isLoggedIn,
+  });
 
   const handleLogout = () => {
     clear();
@@ -19,10 +31,10 @@ export default function Navbar() {
   const navLinks = [
     { label: "Home", to: "/" },
     { label: "Search", to: "/browse" },
-    { label: "Profiles", to: "/browse" },
-    { label: "Success Stories", to: "/#success" },
-    { label: "Premium", to: "/#premium" },
-    { label: "Help", to: "/#help" },
+    { label: "Profiles", to: "/my-profile" },
+    { label: "Success Stories", to: "/success-stories" },
+    { label: "Premium", to: "/membership" },
+    { label: "Help", to: "/help" },
   ];
 
   return (
@@ -63,7 +75,7 @@ export default function Navbar() {
         </ul>
 
         {/* Auth actions */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-2">
           {isLoggedIn ? (
             <>
               <Link to="/browse" data-ocid="nav.link">
@@ -74,6 +86,32 @@ export default function Navbar() {
                   Browse
                 </Button>
               </Link>
+              <Link to="/messages" data-ocid="nav.link">
+                <Button
+                  variant="ghost"
+                  className="text-maroon hover:text-maroon hover:bg-secondary gap-1.5"
+                >
+                  <MessageCircle className="w-4 h-4" /> Messages
+                </Button>
+              </Link>
+              <Link to="/membership" data-ocid="nav.link">
+                <Button
+                  variant="ghost"
+                  className="text-gold hover:text-gold hover:bg-secondary gap-1.5"
+                >
+                  <Crown className="w-4 h-4" /> Membership
+                </Button>
+              </Link>
+              {isAdmin && (
+                <Link to="/admin" data-ocid="nav.link">
+                  <Button
+                    variant="ghost"
+                    className="text-maroon hover:text-maroon hover:bg-secondary gap-1.5"
+                  >
+                    <Shield className="w-4 h-4" /> Admin
+                  </Button>
+                </Link>
+              )}
               <Link to="/my-profile" data-ocid="nav.link">
                 <Button
                   variant="ghost"
@@ -146,6 +184,44 @@ export default function Navbar() {
           <div className="flex flex-col gap-2 pt-2 border-t border-border">
             {isLoggedIn ? (
               <>
+                <Link
+                  to="/messages"
+                  onClick={() => setMobileOpen(false)}
+                  data-ocid="nav.link"
+                >
+                  <Button
+                    variant="outline"
+                    className="w-full border-maroon text-maroon gap-2"
+                  >
+                    <MessageCircle className="w-4 h-4" /> Messages
+                  </Button>
+                </Link>
+                <Link
+                  to="/membership"
+                  onClick={() => setMobileOpen(false)}
+                  data-ocid="nav.link"
+                >
+                  <Button
+                    variant="outline"
+                    className="w-full border-gold text-gold gap-2"
+                  >
+                    <Crown className="w-4 h-4" /> Membership
+                  </Button>
+                </Link>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setMobileOpen(false)}
+                    data-ocid="nav.link"
+                  >
+                    <Button
+                      variant="outline"
+                      className="w-full border-maroon text-maroon gap-2"
+                    >
+                      <Shield className="w-4 h-4" /> Admin Panel
+                    </Button>
+                  </Link>
+                )}
                 <Link
                   to="/my-profile"
                   onClick={() => setMobileOpen(false)}

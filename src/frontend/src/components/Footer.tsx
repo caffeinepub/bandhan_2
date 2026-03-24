@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { SiFacebook, SiInstagram, SiX, SiYoutube } from "react-icons/si";
 
@@ -67,19 +68,43 @@ export default function Footer() {
               Quick Links
             </h4>
             <ul className="space-y-2 text-sm text-white/70">
-              {[
-                "About Us",
-                "How It Works",
-                "Success Stories",
-                "Premium Plans",
-                "Careers",
-              ].map((link) => (
-                <li key={link}>
-                  <a href="/" className="hover:text-gold transition-colors">
-                    {link}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <Link to="/about" className="hover:text-gold transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/how-it-works"
+                  className="hover:text-gold transition-colors"
+                >
+                  How It Works
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/success-stories"
+                  className="hover:text-gold transition-colors"
+                >
+                  Success Stories
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/membership"
+                  className="hover:text-gold transition-colors"
+                >
+                  Premium Plans
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/careers"
+                  className="hover:text-gold transition-colors"
+                >
+                  Careers
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -89,19 +114,40 @@ export default function Footer() {
               Support
             </h4>
             <ul className="space-y-2 text-sm text-white/70">
-              {[
-                "Help Center",
-                "Privacy Policy",
-                "Terms of Service",
-                "Safety Tips",
-                "Contact Us",
-              ].map((link) => (
-                <li key={link}>
-                  <a href="/" className="hover:text-gold transition-colors">
-                    {link}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <Link to="/help" className="hover:text-gold transition-colors">
+                  Help Center
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/privacy"
+                  className="hover:text-gold transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="hover:text-gold transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/safety"
+                  className="hover:text-gold transition-colors"
+                >
+                  Safety Tips
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="hover:text-gold transition-colors"
+                >
+                  Contact Us
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
