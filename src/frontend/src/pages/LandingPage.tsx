@@ -4,6 +4,7 @@ import { Link } from "@tanstack/react-router";
 import {
   ChevronRight,
   Heart,
+  MapPin,
   Shield,
   Sparkles,
   Star,
@@ -31,6 +32,27 @@ const FEATURES = [
     title: "Modern Technology",
     description:
       "Smart algorithms powered by AI help you find compatible matches faster.",
+  },
+];
+
+const HAPPY_COUPLES = [
+  {
+    image: "/assets/generated/couple1.dim_600x700.jpg",
+    name: "Priya & Arjun",
+    city: "Mumbai",
+    year: "2024",
+  },
+  {
+    image: "/assets/generated/couple2.dim_600x700.jpg",
+    name: "Sneha & Rahul",
+    city: "Delhi",
+    year: "2024",
+  },
+  {
+    image: "/assets/generated/couple3.dim_600x700.jpg",
+    name: "Kavya & Vikram",
+    city: "Bangalore",
+    year: "2023",
   },
 ];
 
@@ -140,6 +162,120 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Happy Couples Gallery */}
+      <section className="py-20 px-4 bg-[#fdf8f0]">
+        <div className="container mx-auto">
+          <motion.div
+            className="text-center mb-14"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="text-sm font-medium text-gold mb-2 uppercase tracking-widest">
+              Love Stories
+            </p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-3">
+              Thousands of Happy Couples
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-md mx-auto">
+              Real love stories, real happiness
+            </p>
+            {/* Decorative divider */}
+            <div className="flex items-center justify-center gap-3 mt-5">
+              <div className="h-px w-16 bg-gold/40" />
+              <Heart className="w-4 h-4 text-gold fill-gold" strokeWidth={0} />
+              <div className="h-px w-16 bg-gold/40" />
+            </div>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+            {HAPPY_COUPLES.map((couple, i) => (
+              <motion.div
+                key={couple.name}
+                className="group relative"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 0.6, ease: "easeOut" }}
+                data-ocid={`couples.item.${i + 1}`}
+              >
+                <div
+                  className={`relative overflow-hidden rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500 ${
+                    i === 1 ? "md:-mt-8 md:mb-0" : ""
+                  }`}
+                >
+                  {/* Gold border accent */}
+                  <div className="absolute inset-0 rounded-2xl ring-2 ring-gold/20 z-10 pointer-events-none" />
+
+                  <img
+                    src={couple.image}
+                    alt={`${couple.name} - Happy Couple from Bandhan`}
+                    className={`w-full object-cover transition-transform duration-700 group-hover:scale-105 ${
+                      i === 1
+                        ? "h-[400px] md:h-[480px]"
+                        : "h-[340px] md:h-[400px]"
+                    }`}
+                  />
+
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+                  {/* Caption */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+                    <div className="flex items-center gap-1 mb-1">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star
+                          key={s}
+                          className="w-3 h-3 text-gold fill-gold"
+                          strokeWidth={0}
+                        />
+                      ))}
+                    </div>
+                    <h4 className="font-display font-bold text-white text-lg leading-tight">
+                      {couple.name}
+                    </h4>
+                    <div className="flex items-center gap-1 mt-1">
+                      <MapPin className="w-3 h-3 text-gold" />
+                      <p className="text-white/80 text-sm">
+                        {couple.city} · Married {couple.year}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Heart badge */}
+                  <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md z-10">
+                    <Heart
+                      className="w-4 h-4 text-maroon fill-maroon"
+                      strokeWidth={0}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
+            <Link to="/success-stories" data-ocid="couples.link">
+              <Button
+                variant="outline"
+                className="border-maroon text-maroon hover:bg-maroon hover:text-white px-8"
+              >
+                Read All Success Stories
+                <ChevronRight className="ml-1 w-4 h-4" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>
